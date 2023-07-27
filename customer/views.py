@@ -7,6 +7,7 @@ from django.urls import reverse
 
 from products.models import Product
 from purchase.models import Purchase
+from wishes.models import Wishes
 from .forms import LoginForm
 from .models import Customer
 
@@ -29,17 +30,20 @@ def login_user(request):
 
 
 def beginning_page(request):
-    return render(request, 'index.html')
+    return render(request, 'beginning_page.html')
 
 
 @login_required
 def personal_cabinet(request):
+    user = request.user
     purchases = Purchase.objects.all()
-    if request.user.user_profile.is_admin:
+    if user.user_profile.is_admin:
         return render(request, 'administration_cabinet.html', {'purchases': purchases})
     else:
         products = Product.objects.all()
-        return render(request, 'personal_cabinet.html', {'products': products, 'purchases': purchases})
+        wishes = Wishes.objects.filter(user=user)
+        return render(request, 'personal_cabinet.html',
+                      {'products': products, 'purchases': purchases, 'wishes': wishes})
 
 
 @login_required
