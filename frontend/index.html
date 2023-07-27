@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <form method="get" action="{% url 'login' %}">
+        {% csrf_token %}
+        <button type="submit" class="enter">Войти</button>
+    </form>
+</body>
+</html>
