@@ -4,7 +4,10 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from django.urls import reverse
+
+from products.models import Product
 from .forms import LoginForm
+from .models import Customer
 
 
 def login_user(request):
@@ -16,7 +19,7 @@ def login_user(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect(reverse('personal_cabinet'))
+                return redirect('personal_cabinet')
             else:
                 form.add_error(None, 'Incorrect username or password')
     else:
@@ -30,4 +33,5 @@ def beginning_page(request):
 
 @login_required
 def personal_cabinet(request):
-    return render(request, 'personal_cabinet.html')
+    products = Product.objects.all()
+    return render(request, 'personal_cabinet.html', {'products': products})

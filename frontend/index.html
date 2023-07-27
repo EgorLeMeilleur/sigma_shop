@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <form method="get" action="{% url 'login' %}">
+    <form method="get" action="{% url 'login_user' %}">
         {% csrf_token %}
         <button type="submit" class="enter">Войти</button>
     </form>
