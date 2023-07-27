@@ -15,19 +15,9 @@ class Administration(models.Model):
     email = models.EmailField(verbose_name="Электронная почта", blank=True, null=True, default=None)
 
     class Meta:
-        verbose_name = 'Покупатель'
-        verbose_name_plural = 'Покупатели'
+        verbose_name = 'Сотрудник'
+        verbose_name_plural = 'Сотрудники'
 
     def __str__(self):
         return f"{self.username}"
 
-
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Administration.objects.create(username=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()

@@ -15,10 +15,11 @@ class Customer(models.Model):
     email = models.EmailField(verbose_name="Электронная почта", blank=True, null=True, default=None)
     balance = models.DecimalField(verbose_name="Баланс", max_digits=10000, decimal_places=2, blank=True, null=True,
                                   default=None)
+    city = models.CharField(verbose_name="Город", max_length=255, blank=True, null=True, default=None)
 
     class Meta:
-        verbose_name = 'Cотрудник'
-        verbose_name_plural = 'Сотрудники'
+        verbose_name = 'Покупатель'
+        verbose_name_plural = 'Покупатели'
 
     def __str__(self):
         return f"{self.username}"
