@@ -33,5 +33,8 @@ def beginning_page(request):
 
 @login_required
 def personal_cabinet(request):
-    products = Product.objects.all()
-    return render(request, 'personal_cabinet.html', {'products': products})
+    if request.user.user_profile.is_admin:
+        return render(request, 'administration_cabinet.html')
+    else:
+        products = Product.objects.all()
+        return render(request, 'personal_cabinet.html', {'products': products})
