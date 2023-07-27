@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 
 from products.models import Product
+from purchase.models import Purchase
 from .forms import LoginForm
 from .models import Customer
 
@@ -37,4 +38,6 @@ def personal_cabinet(request):
         return render(request, 'administration_cabinet.html')
     else:
         products = Product.objects.all()
-        return render(request, 'personal_cabinet.html', {'products': products})
+        purchases = Purchase.objects.all()
+        return render(request, 'personal_cabinet.html', {'products': products, 'purchases': purchases})
+
