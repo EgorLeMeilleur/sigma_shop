@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
-
+    {% for item in purchases %}
+        <p>{{ item.user.user_profile.username }}</p>
+        <p>{{ item.product.name }}</p>
+        <p>{{ item.date }}</p>
+    {% endfor %}
 </body>
 </html>

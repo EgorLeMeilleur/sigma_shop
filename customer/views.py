@@ -34,10 +34,15 @@ def beginning_page(request):
 
 @login_required
 def personal_cabinet(request):
+    purchases = Purchase.objects.all()
     if request.user.user_profile.is_admin:
-        return render(request, 'administration_cabinet.html')
+        return render(request, 'administration_cabinet.html', {'purchases': purchases})
     else:
         products = Product.objects.all()
-        purchases = Purchase.objects.all()
         return render(request, 'personal_cabinet.html', {'products': products, 'purchases': purchases})
+
+
+@login_required
+def logout(request):
+    return redirect('beginning_page')
 
