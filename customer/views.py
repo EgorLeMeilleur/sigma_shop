@@ -8,7 +8,7 @@ from django.urls import reverse
 from products.models import Product
 from purchase.models import Purchase
 from wishes.models import Wishes
-from .forms import LoginForm
+from .forms import LoginForm, RegisterForm
 from .models import Customer
 
 
@@ -31,6 +31,12 @@ def login_user(request):
 
 def beginning_page(request):
     return render(request, 'beginning_page.html')
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm()
+        return render(request, 'register.html', {'form': form})
 
 
 @login_required

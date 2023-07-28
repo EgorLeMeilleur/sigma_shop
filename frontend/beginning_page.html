@@ -7,7 +7,11 @@
 <body>
     <form method="get" action="{% url 'login_user' %}">
         {% csrf_token %}
-        <button type="submit" class="enter">Войти</button>
+        <button type="submit">Войти</button>
+    </form>
+    <form method="get" action="{% url 'register' %}">
+        {% csrf_token %}
+        <button type="submit">Регистрация</button>
     </form>
 </body>
 </html>
