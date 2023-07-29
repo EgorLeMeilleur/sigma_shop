@@ -6,14 +6,15 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200&display=swap" rel="stylesheet">
-        <title>Авторизация</title>
+        <title>Регистрация</title>
     </head>
 
     <body>
         <form method="POST" novalidate>
 	      {% csrf_token %}
 	      <h2>Sign Up</h2>
-	      {{ form.as_p }}
+	      {{ user_form.as_p }}
+          {{ profile_form.as_p }}
 	      <input type="submit" value="Register" />
         </form>
     </body>

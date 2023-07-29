@@ -10,26 +10,20 @@ class LoginForm(forms.Form):
     password = forms.CharField(label="", widget=forms.PasswordInput(attrs={'class': 'password'}))
 
 
-class RegisterForm(UserCreationForm):
+class RegisterUserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2', 'email']
+        fields = ['username', 'password1', 'password2']
 
 
-class UserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ('username', 'password')
-
-
-class ProfileForm(forms.Form):
-    surname = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'id': 'surname'}))
-    first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'id': 'first_name'}))
-    last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'id': 'last_name'}))
-    city = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'id': 'city'}))
-    balance = forms.DecimalField(label="", widget=forms.TextInput(attrs={'id': 'balance'}))
-    email = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'id': 'email'}))
+class RegisterProfileForm(forms.Form):
+    surname = forms.CharField(max_length=255, required=True)
+    first_name = forms.CharField(max_length=255, required=True)
+    last_name = forms.CharField(max_length=255, required=True)
+    email = forms.EmailField(required=True)
+    city = forms.CharField(max_length=255, required=False)
 
     class Meta:
         model = Customer
         fields = ('surname', 'first_name', 'last_name', 'email', 'balance', 'city')
+
