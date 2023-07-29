@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 from django.urls import reverse
 
-from products.models import Product
+from products.models import Product, Clothes
 from purchase.models import Purchase
 from wishes.models import Wishes
 from .forms import LoginForm, RegisterUserForm, RegisterProfileForm
@@ -33,7 +33,7 @@ def beginning_page(request):
     return render(request, 'beginning_page.html')
 
 
-def register(request):
+def register_user(request):
     if request.method == 'POST':
         user_form = RegisterUserForm(request.POST)
         profile_form = RegisterProfileForm(request.POST)
@@ -45,7 +45,6 @@ def register(request):
             user.user_profile.email = profile_form.cleaned_data['email']
             user.user_profile.city = profile_form.cleaned_data['city']
             user.user_profile.is_admin = False
-            user.user_profile.balance = 0
             user.save()
             return redirect('login_user')
     else:
@@ -57,17 +56,18 @@ def register(request):
 @login_required
 def personal_cabinet(request):
     user = request.user
-    purchases = Purchase.objects.all()
     if user.user_profile.is_admin:
+        purchases = Purchase.objects.all()
         return render(request, 'administration_cabinet.html', {'purchases': purchases})
     else:
         products = Product.objects.all()
+        purchases = Purchase.objects.filter(user=user)
         wishes = Wishes.objects.filter(user=user)
-        return render(request, 'personal_cabinet.html',
-                      {'products': products, 'purchases': purchases, 'wishes': wishes})
+        return render(request, 'personal_cabinet.html', dict(products=products, purchases=purchases, wishes=wishes))
 
 
 @login_required
 def logout(request):
     return redirect('beginning_page')
+
 

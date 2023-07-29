@@ -9,7 +9,7 @@
         {% csrf_token %}
         <button type="submit">Войти</button>
     </form>
-    <form method="get" action="{% url 'register' %}">
+    <form method="get" action="{% url 'register_user' %}">
         {% csrf_token %}
         <button type="submit">Регистрация</button>
     </form>
