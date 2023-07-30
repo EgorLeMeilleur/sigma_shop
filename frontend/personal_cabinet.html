@@ -7,7 +7,11 @@
     <strong>Личная информация</strong>
     <p>{{ user.user_profile.surname }}<br><br>
         {{ user.user_profile.first_name }}<br><br>{{ user.user_profile.last_name }}<br><br>
-        {{ user.user_profile.city }}</p>
+        {{ user.user_profile.address }}</p>
+    <form method="post" action="{% url 'products_show' %}">
+            {% csrf_token %}
+            <input type="submit" value="Страница с продуктами">
+    </form>
     <strong>Cписок товаров</strong>
     <ul>
         {% for item in products %}
@@ -25,7 +29,7 @@
         <li>{{ item.product.name }} {{ item.date }} {{ item.quantity }}</li>
         {% endfor %}
     </ul>
-    <strong>Cписок желаний</strong>
+    <strong>Корзина</strong>
     <ul>
         {% for item in wishes %}
         <li>{{ item.product.name }} {{ item.quantity }}

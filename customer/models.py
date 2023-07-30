@@ -13,7 +13,7 @@ class Customer(models.Model):
     first_name = models.CharField(verbose_name="Имя", max_length=255, blank=True, null=True, default=None)
     last_name = models.CharField(verbose_name="Отчество", max_length=255, blank=True, null=True, default=None)
     email = models.EmailField(verbose_name="Электронная почта", blank=True, null=True, default=None)
-    city = models.CharField(verbose_name="Город", max_length=255, blank=True, null=True, default=None)
+    address = models.CharField(verbose_name="Адрес", max_length=255, blank=True, null=True, default=None)
     is_admin = models.BooleanField(verbose_name="Админ", default=False)
 
     class Meta:

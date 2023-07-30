@@ -1,0 +1,24 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <strong>Cписок товаров</strong>
+    <ul>
+        <form action="{% url 'products_show' %}" method="get">
+            <label for="category" >Select a category:</label>
+            <select name="category" id="category">
+            <option value="Product">All products</option>
+                <option value="Clothes">Clothes</option>
+            <option value="TShirt">T-Shirts</option>
+            <option value="Sweatshirt">Sweatshirts</option>
+            <option value="Hoody">Hoodies</option></select>
+            <button type="submit">Show products</button>
+        </form>
+        {% for item in products %}
+            <li>{{ item.name }} {{ item.price }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -2,10 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
-from django.urls import reverse
-
-from products.models import Product, Clothes
+from products.models import Product, Clothes, Sweatshirt, TShirt, Hoody
 from purchase.models import Purchase
 from wishes.models import Wishes
 from .forms import LoginForm, RegisterUserForm, RegisterProfileForm
