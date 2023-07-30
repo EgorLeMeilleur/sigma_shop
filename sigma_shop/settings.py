@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'customer',
     'purchase',
     'wishes',
+    'reviews',
     'polymorphic',
 ]
 
