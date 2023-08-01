@@ -22,6 +22,10 @@ class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='images/')
 
+    class Meta:
+        verbose_name = 'Фотография'
+        verbose_name_plural = 'Фотографии'
+
 
 class Clothes(Product):
     size = models.CharField(max_length=10, null=True, default=None)
