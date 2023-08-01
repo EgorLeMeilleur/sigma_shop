@@ -18,6 +18,11 @@ class Product(models.Model):
         return self.name
 
 
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/')
+
+
 class Clothes(Product):
     size = models.CharField(max_length=10, null=True, default=None)
     color = models.CharField(max_length=20, null=True, default=None)
