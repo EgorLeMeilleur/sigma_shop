@@ -9,4 +9,3 @@ class ClothesCreate(forms.Form):
     price = forms.DecimalField(max_digits=5, decimal_places=2)
     material = forms.CharField(max_length=255)
     description = forms.CharField(max_length=255)
-    image = forms.ImageField()

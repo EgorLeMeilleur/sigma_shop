@@ -8,6 +8,7 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
+        <input required name="images" type="file" multiple>
         <input type="submit" value="Create T-Shirt">
     </form>
 </body>

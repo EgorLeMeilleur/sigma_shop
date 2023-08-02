@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ValidationError
 from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect
 from django.apps import apps
-# Create your views here.
+from PIL import Image
 from products.forms import ClothesCreate
 from products.models import Product, TShirt, Clothes, Sweatshirt, Hoody, ProductImage
 
@@ -61,7 +62,7 @@ def sort_by_name_desc(request):
 
 
 def products_show(request):
-    products = find_category(request).objects.all()
+    products = find_category(request).objects.prefetch_related('productimage_set').all()
     return render(request, 'products.html', {'products': products})
 
 
@@ -78,11 +79,16 @@ def clothes_create(request):
             clothes.name = form.cleaned_data['name']
             clothes.material = form.cleaned_data['material']
             clothes.description = form.cleaned_data['description']
+            images = request.FILES.getlist('images')
+            for image in images:
+                img = Image.open(image)
+                if not img.format.lower() in ['jpeg', 'png', 'jpg']:
+                    raise ValidationError('Unsupported file format.')
+                product_image = ProductImage()
+                product_image.image = image
+                product_image.product = clothes
+                product_image.save()
             clothes.save()
-            product_image = ProductImage()
-            product_image.image = form.cleaned_data['image']
-            product_image.product = clothes
-            product_image.save()
             return redirect('products_show')
     else:
         form = ClothesCreate()

@@ -18,6 +18,9 @@
         </form>
         {% for item in products %}
             <li>{{ item.name }} {{ item.price }}</li>
+            {% for image in item.productimage_set.all %}
+                <img src="{{ image.image.url }}" alt="{{ item.name }}">
+            {% endfor %}
         {% endfor %}
     </ul>
 </body>
