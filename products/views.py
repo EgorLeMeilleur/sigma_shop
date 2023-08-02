@@ -23,6 +23,7 @@ def create_object_type(model_name):
     else:
         raise ValueError('Invalid model name')
 
+
 def find_category(request):
     content_type = request.GET.get('category', 'Product')
     model = apps.get_model('products', content_type)
@@ -86,4 +87,10 @@ def clothes_create(request):
     else:
         form = ClothesCreate()
     return render(request, 'clothes_create.html', {'form': form})
+
+
+@login_required
+def delete_product(request, pk):
+    get_object_or_404(Product, pk=pk).delete()
+    return redirect('products_show')
 
