@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-
+from phonenumber_field.modelfields import PhoneNumberField
 # Create your models here.
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -15,6 +15,7 @@ class Customer(models.Model):
     email = models.EmailField(verbose_name="Электронная почта", blank=True, null=True, default=None)
     address = models.CharField(verbose_name="Адрес", max_length=255, blank=True, null=True, default=None)
     is_admin = models.BooleanField(verbose_name="Админ", default=False)
+    phone_number = PhoneNumberField(default=None)
 
     class Meta:
         verbose_name = 'Покупатель'
