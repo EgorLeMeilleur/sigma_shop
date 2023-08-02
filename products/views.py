@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.apps import apps
 from PIL import Image
 from products.forms import ClothesCreate
-from products.models import Product, TShirt, Clothes, Sweatshirt, Hoody, ProductImage
+from products.models import Product, TShirt, Sweatshirt, Hoody, ProductImage
 
 
 def create_object_type(model_name):
@@ -27,7 +27,10 @@ def create_object_type(model_name):
 
 def find_category(request):
     content_type = request.GET.get('category', 'Product')
-    model = apps.get_model('products', content_type)
+    if content_type == 'Promotion':
+        model = Product.objects.filter(Product.promotion > 0)
+    else:
+        model = apps.get_model('products', content_type)
     return model
 
 
@@ -99,4 +102,3 @@ def clothes_create(request):
 def delete_product(request, pk):
     get_object_or_404(Product, pk=pk).delete()
     return redirect('products_show')
-

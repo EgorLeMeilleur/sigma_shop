@@ -6,9 +6,10 @@ from django.db import models
 
 class Product(models.Model):
     name = models.CharField(verbose_name="Название", max_length=255, unique=True, blank=True, null=True, default=None)
-    price = models.DecimalField(verbose_name="Цена", max_digits=1000, decimal_places=2, blank=True, null=True,
+    price = models.DecimalField(verbose_name="Цена", max_digits=8, decimal_places=2, blank=True, null=True,
                                 default=None)
     description = models.TextField(verbose_name="Описание", max_length=255, blank=True, null=True, default=None)
+    promotion = models.DecimalField(verbose_name="Акция", max_digits=5, decimal_places=2, default=0)
 
     class Meta:
         verbose_name = 'Продукт'
@@ -16,6 +17,9 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_discounted_price(self):
+        return self.price * (1 - self.promotion / 100)
 
 
 class ProductImage(models.Model):
@@ -79,5 +83,3 @@ class Hoody(Clothes):
     class Meta:
         verbose_name = 'Худи'
         verbose_name_plural = 'Худи'
-
-
