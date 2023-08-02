@@ -7,14 +7,13 @@ from purchase.models import Purchase
 from wishes.models import Wishes
 
 
-def purchase(request, pk):
+def purchase(request):
     if request.method == 'POST':
         user_id = request.user
-        product = get_object_or_404(Product, pk=pk)
-        if Wishes.objects.filter(user=user_id, product=product):
-            wish = get_object_or_404(Wishes, user=user_id, product=product)
-            new_obj = Purchase(user=user_id, product=product,
-                               quantity=wish.quantity)
-            new_obj.save()
-            wish.delete()
+        wishes = Wishes.objects.filter(user=user_id)
+        if wishes:
+            for wish in wishes:
+                new_obj = Purchase(user=user_id, product=wish.product, quantity=wish.quantity)
+                new_obj.save()
+                wish.delete()
     return redirect('personal_cabinet')

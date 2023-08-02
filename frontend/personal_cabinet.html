@@ -33,10 +33,6 @@
     <ul>
         {% for item in wishes %}
         <li>{{ item.product.name }} {{ item.quantity }}
-            <form method="post" action="{% url 'purchase' item.product.pk %}">
-            {% csrf_token %}
-            <input type="submit" value="Купить">
-        </form>
         <form method="post" action="{% url 'delete_wishes' item.product.pk %}">
             {% csrf_token %}
             <input type="submit" value="Убрать из корзины">
@@ -44,5 +40,9 @@
         </li>
         {% endfor %}
     </ul>
+    <form method="post" action="{% url 'purchase' %}">
+            {% csrf_token %}
+            <input type="submit" value="Купить">
+        </form>
 </body>
 </html>

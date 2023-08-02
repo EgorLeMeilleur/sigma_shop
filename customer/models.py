@@ -15,7 +15,7 @@ class Customer(models.Model):
     email = models.EmailField(verbose_name="Электронная почта", blank=True, null=True, default=None)
     address = models.CharField(verbose_name="Адрес", max_length=255, blank=True, null=True, default=None)
     is_admin = models.BooleanField(verbose_name="Админ", default=False)
-    phone_number = PhoneNumberField(null=True, default='+1234567890')
+    phone_number = PhoneNumberField(blank=True, null=True, default=None)
 
     class Meta:
         verbose_name = 'Покупатель'
@@ -25,12 +25,12 @@ class Customer(models.Model):
         return f"{self.username}"
 
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Customer.objects.create(username=instance)
-
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.user_profile.save()
+# @receiver(post_save, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         Customer.objects.create(username=instance)
+#
+#
+# @receiver(post_save, sender=User)
+# def save_user_profile(sender, instance, **kwargs):
+#     instance.user_profile.save()

@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-
+from phonenumber_field.phonenumber import PhoneNumber
 from products.models import Product, Clothes, Sweatshirt, TShirt, Hoody
 from purchase.models import Purchase
 from wishes.models import Wishes
@@ -36,13 +36,9 @@ def register_user(request):
         profile_form = RegisterProfileForm(request.POST)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-            user.user_profile.surname = profile_form.cleaned_data['surname']
-            user.user_profile.first_name = profile_form.cleaned_data['first_name']
-            user.user_profile.last_name = profile_form.cleaned_data['last_name']
-            user.user_profile.email = profile_form.cleaned_data['email']
-            user.user_profile.city = profile_form.cleaned_data['city']
-            user.user_profile.is_admin = False
-            user.save()
+            customer = profile_form.save()
+            customer.username = user
+            customer.save()
             return redirect('login_user')
     else:
         user_form = RegisterUserForm()
@@ -66,5 +62,3 @@ def personal_cabinet(request):
 @login_required
 def logout(request):
     return redirect('beginning_page')
-
-
