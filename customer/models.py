@@ -15,7 +15,7 @@ class Customer(models.Model):
     email = models.EmailField(verbose_name="Электронная почта", blank=True, null=True, default=None)
     address = models.CharField(verbose_name="Адрес", max_length=255, blank=True, null=True, default=None)
     is_admin = models.BooleanField(verbose_name="Админ", default=False)
-    phone_number = PhoneNumberField(default=None)
+    phone_number = PhoneNumberField(null=True, default='+1234567890')
 
     class Meta:
         verbose_name = 'Покупатель'
