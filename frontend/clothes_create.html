@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>T-Shirt Constructor</title>
+</head>
+<body>
+    <h1>T-Shirt Constructor</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Create T-Shirt">
+    </form>
+</body>
+</html>

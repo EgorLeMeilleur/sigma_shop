@@ -1,10 +1,27 @@
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.apps import apps
 # Create your views here.
-from products.models import Product
+from products.forms import ClothesCreate
+from products.models import Product, TShirt, Clothes, Sweatshirt, Hoody, ProductImage
 
+
+def create_object_type(model_name):
+    if model_name == 'TShirt':
+        obj = TShirt()
+        obj.save()
+        return obj
+    elif model_name == 'Sweatshirt':
+        obj = Sweatshirt()
+        obj.save()
+        return obj
+    elif model_name == 'Hoody':
+        obj = Hoody()
+        obj.save()
+        return obj
+    else:
+        raise ValueError('Invalid model name')
 
 def find_category(request):
     content_type = request.GET.get('category', 'Product')
@@ -45,4 +62,28 @@ def sort_by_name_desc(request):
 def products_show(request):
     products = find_category(request).objects.all()
     return render(request, 'products.html', {'products': products})
+
+
+@login_required
+def clothes_create(request):
+    if request.method == 'POST':
+        form = ClothesCreate(request.POST, request.FILES)
+        if form.is_valid():
+            type_clothes = form.cleaned_data['type']
+            clothes = create_object_type(type_clothes)
+            clothes.size = form.cleaned_data['size']
+            clothes.color = form.cleaned_data['color']
+            clothes.price = form.cleaned_data['price']
+            clothes.name = form.cleaned_data['name']
+            clothes.material = form.cleaned_data['material']
+            clothes.description = form.cleaned_data['description']
+            clothes.save()
+            product_image = ProductImage()
+            product_image.image = form.cleaned_data['image']
+            product_image.product = clothes
+            product_image.save()
+            return redirect('products_show')
+    else:
+        form = ClothesCreate()
+    return render(request, 'clothes_create.html', {'form': form})
 
