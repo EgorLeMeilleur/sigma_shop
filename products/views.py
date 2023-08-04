@@ -2,7 +2,6 @@ from decimal import Decimal
 from operator import methodcaller
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
-from django.db.models import Count
 from django.shortcuts import render, get_object_or_404, redirect
 from django.apps import apps
 from PIL import Image

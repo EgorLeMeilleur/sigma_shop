@@ -1,12 +1,10 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from phonenumber_field.phonenumber import PhoneNumber
-from products.models import Product, Clothes, Sweatshirt, TShirt, Hoody
+from products.models import Product
 from purchase.models import Purchase
 from wishes.models import Wishes
 from .forms import LoginForm, RegisterUserForm, RegisterProfileForm
-from .models import Customer
 
 
 def login_user(request):
@@ -60,5 +58,6 @@ def personal_cabinet(request):
 
 
 @login_required
-def logout(request):
+def logout_view(request):
+    logout(request)
     return redirect('beginning_page')
