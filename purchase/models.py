@@ -8,8 +8,8 @@ from products.models import Product
 
 
 class Purchase(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='purchases')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='purchases')
     date = models.DateTimeField(auto_now_add=True)
     quantity = models.PositiveIntegerField(default=0)
     old = models.BooleanField(default=False, verbose_name="Выполненный заказ")

@@ -9,7 +9,7 @@ class Product(models.Model):
     price = models.DecimalField(verbose_name="Цена", max_digits=8, decimal_places=2, blank=True, null=True,
                                 default=None)
     description = models.TextField(verbose_name="Описание", max_length=255, blank=True, null=True, default=None)
-    promotion = models.DecimalField(verbose_name="Акция", max_digits=5, decimal_places=2, default=0)
+    promotion = models.DecimalField(verbose_name="Акция", max_digits=5, decimal_places=2, blank=True, null=True, default=0)
 
     class Meta:
         verbose_name = 'Продукт'
@@ -20,6 +20,9 @@ class Product(models.Model):
 
     def get_discounted_price(self):
         return self.price * (1 - self.promotion / 100)
+
+    def get_purchase_count(self):
+        return self.purchases.aggregate(total_quantity=models.Sum('quantity'))['total_quantity']
 
 
 class ProductImage(models.Model):
